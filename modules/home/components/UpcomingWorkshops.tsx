@@ -7,7 +7,7 @@ export default function UpcomingWorkshops() {
   return (
     <section className="section-py bg-primary-50/40">
       <div className="container-app">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <span className="eyebrow">Workshops & Events</span>
             <h2 className="mt-2 font-heading text-2xl font-extrabold text-secondary-800 sm:text-3xl">

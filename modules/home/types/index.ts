@@ -24,6 +24,7 @@ export type CoreService = {
   title: string;
   description: string;
   href: string;
+  image: string;
 };
 
 export type Stat = {

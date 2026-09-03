@@ -30,7 +30,7 @@ export default function Hero() {
         className="pointer-events-none absolute top-0 -right-6 h-full w-32 text-secondary-800 opacity-[0.05] sm:w-40"
       />
 
-      <div className="container-app relative grid grid-cols-1 items-center gap-12 py-14 sm:py-16 lg:grid-cols-12 lg:py-20">
+      <div className="container-app relative grid grid-cols-1 items-center gap-10 py-10 sm:py-12 lg:grid-cols-12 lg:py-14">
         <Reveal className="lg:col-span-7">
           <span className="eyebrow rounded-full border border-primary-100 bg-primary-50 px-3.5 py-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-primary-600" />
@@ -85,7 +85,7 @@ export default function Hero() {
             </Link>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-8 border-t border-secondary-100 pt-6">
+          <div className="mt-7 flex flex-wrap items-center gap-8 border-t border-secondary-100 pt-5">
             <div className="flex items-center gap-3">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md shadow-primary-600/20">
                 <Users className="h-5.5 w-5.5" />

@@ -115,36 +115,42 @@ export const CORE_SERVICES: CoreService[] = [
     title: "Research & Dissertation Support",
     description: "From topic selection to publication, we guide you at every step.",
     href: "/research-dissertation",
+    image: "/services/research-dissertation.jpg",
   },
   {
     icon: Microscope,
     title: "Laboratory Training",
     description: "Hands-on training in advanced labs with expert guidance.",
     href: "/laboratory-services",
+    image: "/services/laboratory-training.jpg",
   },
   {
     icon: Award,
     title: "Short-Term Courses",
     description: "Certification courses designed for skill enhancement.",
     href: "/programs/short-term-courses",
+    image: "/services/short-term-courses.jpg",
   },
   {
     icon: Monitor,
     title: "Bioinformatics Services",
     description: "Computational analysis, NGS, docking, data analysis & more.",
     href: "/laboratory-services",
+    image: "/services/bioinformatics.jpg",
   },
   {
     icon: Presentation,
     title: "Workshops & Webinars",
     description: "Interactive workshops by experts on trending topics.",
     href: "/workshops-events",
+    image: "/services/workshops.jpg",
   },
   {
     icon: ClipboardList,
     title: "Project & Research Consultancy",
     description: "Custom solutions for academic & industry research needs.",
     href: "/for-industry",
+    image: "/services/consultancy.jpg",
   },
 ];
 

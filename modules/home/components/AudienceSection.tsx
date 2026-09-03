@@ -17,7 +17,7 @@ export default function AudienceSection() {
       />
 
       <div className="container-app relative">
-        <div className="mb-12 text-center">
+        <div className="mb-8 text-center">
           <span className="eyebrow justify-center">Find Your Path</span>
           <h2 className="mt-2 font-heading text-2xl font-extrabold text-secondary-800 sm:text-3xl">
             I am looking for<span className="text-primary-600">...</span>
@@ -62,7 +62,7 @@ export default function AudienceSection() {
           ))}
         </div>
 
-        <Reveal className="relative mt-14 overflow-hidden rounded-3xl bg-linear-to-br from-secondary-800 via-secondary-800 to-primary-800 px-7 py-10 sm:px-12">
+        <Reveal className="relative mt-10 overflow-hidden rounded-3xl bg-linear-to-br from-secondary-800 via-secondary-800 to-primary-800 px-7 py-8 sm:px-12">
           <div
             aria-hidden
             className="absolute top-1/2 -right-20 h-72 w-72 -translate-y-1/2 rounded-full bg-primary-500/10 blur-2xl"

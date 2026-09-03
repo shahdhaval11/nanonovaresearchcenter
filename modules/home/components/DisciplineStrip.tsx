@@ -2,13 +2,13 @@ import { HERO_DISCIPLINES } from "../constData/const";
 
 export default function DisciplineStrip() {
   return (
-    <section className="relative z-10 -mt-8 sm:-mt-10">
+    <section className="relative z-10 -mt-6 sm:-mt-8">
       <div className="container-app">
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-secondary-100 bg-secondary-100 shadow-soft sm:grid-cols-3 lg:grid-cols-5">
           {HERO_DISCIPLINES.map((d) => (
             <div
               key={d.title}
-              className="group relative flex flex-col items-center gap-2.5 bg-white px-4 py-7 text-center transition-colors hover:bg-primary-50/40"
+              className="group relative flex flex-col items-center gap-2.5 bg-white px-4 py-5 text-center transition-colors hover:bg-primary-50/40"
             >
               <span
                 aria-hidden
