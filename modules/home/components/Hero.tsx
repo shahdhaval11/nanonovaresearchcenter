@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Search, MessageCircle, Users, GraduationCap, Star } from "lucide-react";
 import InquiryForm from "./InquiryForm";
+import Reveal from "@/components/ui/Reveal";
+import DnaMotif from "@/components/ui/DnaMotif";
 
 export default function Hero() {
   return (
@@ -16,15 +18,20 @@ export default function Hero() {
       />
       <div
         aria-hidden
-        className="absolute -top-10 -right-10 h-105 w-105 rounded-full bg-primary-100/60 blur-3xl"
+        className="animate-float absolute -top-10 -right-10 h-105 w-105 rounded-full bg-primary-100/60 blur-3xl"
       />
       <div
         aria-hidden
-        className="absolute -bottom-15 -left-10 h-105 w-105 rounded-full bg-accent-50 blur-3xl"
+        style={{ animationDelay: "-3.5s" }}
+        className="animate-float absolute -bottom-15 -left-10 h-105 w-105 rounded-full bg-accent-50 blur-3xl"
+      />
+      <DnaMotif
+        segments={7}
+        className="pointer-events-none absolute top-0 -right-6 h-full w-32 text-secondary-800 opacity-[0.05] sm:w-40"
       />
 
       <div className="container-app relative grid grid-cols-1 items-center gap-12 py-14 sm:py-16 lg:grid-cols-12 lg:py-20">
-        <div className="lg:col-span-7">
+        <Reveal className="lg:col-span-7">
           <span className="eyebrow rounded-full border border-primary-100 bg-primary-50 px-3.5 py-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-primary-600" />
             Welcome to NanoNova Research Training Centre
@@ -98,9 +105,9 @@ export default function Hero() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="relative lg:col-span-5">
+        <Reveal delay={150} className="relative lg:col-span-5">
           <div
             aria-hidden
             className="absolute -inset-4 -z-10 rounded-[2rem] bg-linear-to-br from-primary-200/40 via-transparent to-accent-200/40 blur-xl"
@@ -127,7 +134,7 @@ export default function Hero() {
               <p className="text-[11px] font-semibold text-secondary-600">2500+ learners trained</p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

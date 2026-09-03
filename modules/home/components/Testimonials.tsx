@@ -1,5 +1,6 @@
 import { Quote, Star } from "lucide-react";
 import { TESTIMONIALS } from "../constData/const";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Testimonials() {
   return (
@@ -13,11 +14,9 @@ export default function Testimonials() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {TESTIMONIALS.map((t) => (
-            <div
-              key={t.name}
-              className="flex flex-col rounded-2xl border border-secondary-100 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl"
-            >
+          {TESTIMONIALS.map((t, index) => (
+            <Reveal key={t.name} delay={index * 100}>
+            <div className="flex h-full flex-col rounded-2xl border border-secondary-100 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-50 text-primary-500">
                 <Quote className="h-5 w-5 fill-current" />
               </span>
@@ -37,6 +36,7 @@ export default function Testimonials() {
                 </div>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>

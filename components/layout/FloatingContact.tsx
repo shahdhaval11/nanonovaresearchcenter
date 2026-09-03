@@ -35,9 +35,12 @@ export default function FloatingContact() {
           rel={action.label === "WhatsApp" ? "noopener noreferrer" : undefined}
           aria-label={action.label}
           title={action.label}
-          className={`flex h-12 w-12 items-center justify-center rounded-full text-white shadow-soft transition-transform hover:scale-110 ${action.className}`}
+          className={`relative flex h-12 w-12 items-center justify-center rounded-full text-white shadow-soft transition-transform hover:scale-110 ${action.className}`}
         >
-          {action.icon}
+          {action.label === "WhatsApp" && (
+            <span className="absolute inset-0 animate-ping rounded-full bg-[#25D366] opacity-75" />
+          )}
+          <span className="relative">{action.icon}</span>
         </Link>
       ))}
     </div>

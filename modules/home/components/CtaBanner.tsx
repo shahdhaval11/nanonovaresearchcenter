@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
 
 export default function CtaBanner() {
   return (
     <section className="section-py">
       <div className="container-app">
-        <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-secondary-800 to-accent-700 px-8 py-12 text-center sm:px-14 sm:text-left">
+        <Reveal className="relative overflow-hidden rounded-2xl bg-linear-to-r from-secondary-800 to-accent-700 px-8 py-12 text-center sm:px-14 sm:text-left">
           <div
             aria-hidden
-            className="absolute top-1/2 right-[-60px] hidden h-64 w-64 -translate-y-1/2 rounded-full bg-white/5 sm:block"
+            className="animate-float absolute top-1/2 -right-15 hidden h-64 w-64 -translate-y-1/2 rounded-full bg-white/5 sm:block"
           />
           <div className="relative flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div>
@@ -30,7 +31,7 @@ export default function CtaBanner() {
               </Link>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

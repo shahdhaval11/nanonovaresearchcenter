@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Clock, BadgeCheck, Flame } from "lucide-react";
 import { POPULAR_PROGRAMS } from "../constData/const";
+import Reveal from "@/components/ui/Reveal";
 
 export default function PopularPrograms() {
   return (
@@ -24,10 +25,8 @@ export default function PopularPrograms() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {POPULAR_PROGRAMS.map((program, index) => (
-            <div
-              key={program.title}
-              className="group overflow-hidden rounded-2xl border border-secondary-100 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl"
-            >
+            <Reveal key={program.title} delay={(index % 3) * 100}>
+            <div className="group overflow-hidden rounded-2xl border border-secondary-100 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
               <div className="relative flex h-40 items-center justify-center overflow-hidden bg-linear-to-br from-secondary-800 via-secondary-700 to-primary-700">
                 <div
                   aria-hidden
@@ -71,6 +70,7 @@ export default function PopularPrograms() {
                 </Link>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>

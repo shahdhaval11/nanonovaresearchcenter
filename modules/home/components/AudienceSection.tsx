@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight, CircleCheckBig, Sparkles } from "lucide-react";
 import { AUDIENCE_OPTIONS, WHY_NANONOVA } from "../constData/const";
+import Reveal from "@/components/ui/Reveal";
+import DnaMotif from "@/components/ui/DnaMotif";
 
 export default function AudienceSection() {
   return (
@@ -8,6 +10,10 @@ export default function AudienceSection() {
       <div
         aria-hidden
         className="absolute top-24 left-1/2 h-125 w-225 -translate-x-1/2 rounded-full bg-primary-50/70 blur-3xl"
+      />
+      <DnaMotif
+        segments={7}
+        className="pointer-events-none absolute top-0 -left-8 h-full w-32 text-primary-600 opacity-[0.05] sm:w-40"
       />
 
       <div className="container-app relative">
@@ -20,40 +26,43 @@ export default function AudienceSection() {
 
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-6">
           {AUDIENCE_OPTIONS.map((option, index) => (
-            <Link
+            <Reveal
               key={option.title}
-              href={option.href}
-              className={`group relative flex flex-col overflow-hidden rounded-2xl border border-secondary-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-transparent hover:shadow-xl lg:col-span-2 ${option.glow} ${
-                index === 3 ? "lg:col-start-2" : index === 4 ? "lg:col-start-4" : ""
-              }`}
+              delay={index * 90}
+              className={`lg:col-span-2 ${index === 3 ? "lg:col-start-2" : index === 4 ? "lg:col-start-4" : ""}`}
             >
-              <div
-                aria-hidden
-                className={`absolute -top-10 -right-10 h-28 w-28 rounded-full bg-linear-to-br opacity-10 transition-transform duration-500 group-hover:scale-150 ${option.gradient}`}
-              />
-
-              <span
-                className={`relative flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br text-white shadow-md ${option.gradient}`}
+              <Link
+                href={option.href}
+                className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-secondary-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-transparent hover:shadow-xl ${option.glow}`}
               >
-                <option.icon className="h-7 w-7" />
-              </span>
+                <div
+                  aria-hidden
+                  className={`absolute -top-10 -right-10 h-28 w-28 rounded-full bg-linear-to-br opacity-10 transition-transform duration-500 group-hover:scale-150 ${option.gradient}`}
+                />
 
-              <p className="relative mt-5 font-heading text-base font-bold text-secondary-800">
-                {option.title}
-              </p>
-              <p className="relative mt-1.5 text-sm leading-relaxed text-secondary-500">
-                {option.description}
-              </p>
+                <span
+                  className={`relative flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br text-white shadow-md ${option.gradient}`}
+                >
+                  <option.icon className="h-7 w-7" />
+                </span>
 
-              <span className="relative mt-5 inline-flex items-center gap-1.5 text-xs font-bold text-secondary-400 transition-colors group-hover:text-primary-700">
-                Explore
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </span>
-            </Link>
+                <p className="relative mt-5 font-heading text-base font-bold text-secondary-800">
+                  {option.title}
+                </p>
+                <p className="relative mt-1.5 text-sm leading-relaxed text-secondary-500">
+                  {option.description}
+                </p>
+
+                <span className="relative mt-5 inline-flex items-center gap-1.5 text-xs font-bold text-secondary-400 transition-colors group-hover:text-primary-700">
+                  Explore
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </Link>
+            </Reveal>
           ))}
         </div>
 
-        <div className="relative mt-14 overflow-hidden rounded-3xl bg-linear-to-br from-secondary-800 via-secondary-800 to-primary-800 px-7 py-10 sm:px-12">
+        <Reveal className="relative mt-14 overflow-hidden rounded-3xl bg-linear-to-br from-secondary-800 via-secondary-800 to-primary-800 px-7 py-10 sm:px-12">
           <div
             aria-hidden
             className="absolute top-1/2 -right-20 h-72 w-72 -translate-y-1/2 rounded-full bg-primary-500/10 blur-2xl"
@@ -86,7 +95,7 @@ export default function AudienceSection() {
               ))}
             </ul>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, MapPin, Clock } from "lucide-react";
 import { UPCOMING_WORKSHOPS } from "../constData/const";
+import Reveal from "@/components/ui/Reveal";
 
 export default function UpcomingWorkshops() {
   return (
@@ -23,11 +24,9 @@ export default function UpcomingWorkshops() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {UPCOMING_WORKSHOPS.map((event) => (
-            <div
-              key={event.title}
-              className="flex gap-4 rounded-xl border border-secondary-100 bg-white p-5 shadow-sm"
-            >
+          {UPCOMING_WORKSHOPS.map((event, index) => (
+            <Reveal key={event.title} delay={index * 100}>
+            <div className="flex gap-4 rounded-xl border border-secondary-100 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-soft">
               <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-secondary-800 text-white">
                 <span className="font-heading text-lg leading-none font-extrabold">{event.day}</span>
                 <span className="mt-1 text-[10px] font-semibold tracking-wide">{event.month}</span>
@@ -53,6 +52,7 @@ export default function UpcomingWorkshops() {
                 </Link>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>
