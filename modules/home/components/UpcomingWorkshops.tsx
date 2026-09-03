@@ -7,7 +7,7 @@ export default function UpcomingWorkshops() {
   return (
     <section className="section-py bg-primary-50/40">
       <div className="container-app">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <span className="eyebrow">Workshops & Events</span>
             <h2 className="mt-2 font-heading text-2xl font-extrabold text-secondary-800 sm:text-3xl">
@@ -23,10 +23,10 @@ export default function UpcomingWorkshops() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {UPCOMING_WORKSHOPS.map((event, index) => (
             <Reveal key={event.title} delay={index * 100}>
-            <div className="flex gap-4 rounded-xl border border-secondary-100 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-soft">
+            <div className="flex gap-4 rounded-xl border border-secondary-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-soft">
               <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-secondary-800 text-white">
                 <span className="font-heading text-lg leading-none font-extrabold">{event.day}</span>
                 <span className="mt-1 text-[10px] font-semibold tracking-wide">{event.month}</span>

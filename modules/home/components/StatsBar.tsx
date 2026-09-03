@@ -13,7 +13,7 @@ export default function StatsBar() {
           backgroundSize: "22px 22px",
         }}
       />
-      <div className="container-app relative grid grid-cols-2 gap-4 py-12 sm:grid-cols-3 lg:grid-cols-6">
+      <div className="container-app relative grid grid-cols-2 gap-4 py-9 sm:grid-cols-3 lg:grid-cols-6">
         {STATS.map((stat, index) => (
           <Reveal key={stat.label} delay={index * 80}>
             <div className="flex flex-col items-center gap-2.5 rounded-2xl border border-white/10 bg-white/10 py-6 text-center text-white backdrop-blur-sm transition-colors hover:bg-white/15">

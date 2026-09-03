@@ -8,7 +8,7 @@ export default function DisciplineStrip() {
           {HERO_DISCIPLINES.map((d) => (
             <div
               key={d.title}
-              className="group relative flex flex-col items-center gap-2.5 bg-white px-4 py-7 text-center transition-colors hover:bg-primary-50/40"
+              className="group relative flex flex-col items-center gap-2 bg-white px-4 py-5 text-center transition-colors hover:bg-primary-50/40"
             >
               <span
                 aria-hidden

@@ -6,7 +6,7 @@ export default function CtaBanner() {
   return (
     <section className="section-py">
       <div className="container-app">
-        <Reveal className="relative overflow-hidden rounded-2xl bg-linear-to-r from-secondary-800 to-accent-700 px-8 py-12 text-center sm:px-14 sm:text-left">
+        <Reveal className="relative overflow-hidden rounded-2xl bg-linear-to-r from-secondary-800 to-accent-700 px-8 py-9 text-center sm:px-14 sm:text-left">
           <div
             aria-hidden
             className="animate-float absolute top-1/2 -right-15 hidden h-64 w-64 -translate-y-1/2 rounded-full bg-white/5 sm:block"

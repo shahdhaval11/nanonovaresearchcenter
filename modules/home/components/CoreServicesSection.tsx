@@ -1,5 +1,14 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  FlaskConical,
+  GraduationCap,
+  Dna,
+  Users,
+  Target,
+  type LucideIcon,
+} from "lucide-react";
 import { CORE_SERVICES } from "../constData/const";
 import Reveal from "@/components/ui/Reveal";
 import DnaMotif from "@/components/ui/DnaMotif";
@@ -12,6 +21,8 @@ const CARD_GRADIENTS = [
   "from-rose-500 to-pink-600",
   "from-teal-500 to-emerald-600",
 ];
+
+const ACCENT_ICONS: LucideIcon[] = [BookOpen, FlaskConical, GraduationCap, Dna, Users, Target];
 
 export default function CoreServicesSection() {
   return (
@@ -32,43 +43,62 @@ export default function CoreServicesSection() {
       />
 
       <div className="container-app relative">
-        <div className="mb-12 text-center">
+        <div className="mb-9 text-center">
           <span className="eyebrow justify-center">Our Core Services</span>
           <h2 className="mt-2 font-heading text-2xl font-extrabold text-secondary-800 sm:text-3xl">
             Everything You Need to Succeed in Research
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {CORE_SERVICES.map((service, index) => (
-            <Reveal key={service.title} delay={(index % 3) * 100}>
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-secondary-100 bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-transparent hover:shadow-xl">
-                <div
-                  aria-hidden
-                  className={`absolute -top-12 -right-12 h-32 w-32 rounded-full bg-linear-to-br opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-15 ${CARD_GRADIENTS[index % CARD_GRADIENTS.length]}`}
-                />
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {CORE_SERVICES.map((service, index) => {
+            const gradient = CARD_GRADIENTS[index % CARD_GRADIENTS.length];
+            const AccentIcon = ACCENT_ICONS[index % ACCENT_ICONS.length];
+            return (
+              <Reveal key={service.title} delay={(index % 3) * 100}>
+                <div className="group h-full overflow-hidden rounded-2xl border border-secondary-100 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-transparent hover:shadow-xl">
+                  <div
+                    className={`relative flex h-28 items-center justify-center overflow-hidden bg-linear-to-br ${gradient}`}
+                  >
+                    <div
+                      aria-hidden
+                      className="absolute inset-0 opacity-20"
+                      style={{
+                        backgroundImage:
+                          "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+                        backgroundSize: "16px 16px",
+                      }}
+                    />
+                    <AccentIcon
+                      aria-hidden
+                      className="absolute -top-3 -right-3 h-16 w-16 text-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+                      strokeWidth={1.5}
+                    />
+                    <service.icon
+                      className="relative h-11 w-11 text-white drop-shadow-sm transition-transform duration-300 group-hover:scale-110"
+                      strokeWidth={1.75}
+                    />
+                  </div>
 
-                <span
-                  className={`relative flex h-13 w-13 items-center justify-center rounded-2xl bg-linear-to-br text-white shadow-md transition-transform duration-300 group-hover:scale-110 ${CARD_GRADIENTS[index % CARD_GRADIENTS.length]}`}
-                >
-                  <service.icon className="h-6 w-6" />
-                </span>
-                <h3 className="relative mt-5 font-heading text-lg font-bold text-secondary-800">
-                  {service.title}
-                </h3>
-                <p className="relative mt-2 text-sm leading-relaxed text-secondary-500">
-                  {service.description}
-                </p>
-                <Link
-                  href={service.href}
-                  className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-700 hover:text-primary-800"
-                >
-                  Learn More
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </div>
-            </Reveal>
-          ))}
+                  <div className="p-5">
+                    <h3 className="font-heading text-lg font-bold text-secondary-800">
+                      {service.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-secondary-500">
+                      {service.description}
+                    </p>
+                    <Link
+                      href={service.href}
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-700 hover:text-primary-800"
+                    >
+                      Learn More
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

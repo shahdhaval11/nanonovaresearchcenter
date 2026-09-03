@@ -4,9 +4,9 @@ export default function PartnersStrip() {
   const loop = [...PARTNERS, ...PARTNERS];
 
   return (
-    <section className="border-y border-secondary-100 bg-secondary-50/40 py-10">
+    <section className="border-y border-secondary-100 bg-secondary-50/40 py-7">
       <div className="container-app">
-        <p className="mb-6 text-center text-xs font-bold tracking-wide text-secondary-400 uppercase">
+        <p className="mb-5 text-center text-xs font-bold tracking-wide text-secondary-400 uppercase">
           Our Academic & Industry Partners
         </p>
       </div>

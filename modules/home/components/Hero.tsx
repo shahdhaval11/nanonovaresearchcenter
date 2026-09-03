@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Search, MessageCircle, Users, GraduationCap, Star } from "lucide-react";
 import InquiryForm from "./InquiryForm";
 import Reveal from "@/components/ui/Reveal";
-import DnaMotif from "@/components/ui/DnaMotif";
+import HeroBackdrop from "@/components/ui/HeroBackdrop";
 
 export default function Hero() {
   return (
@@ -25,12 +25,7 @@ export default function Hero() {
         style={{ animationDelay: "-3.5s" }}
         className="animate-float absolute -bottom-15 -left-10 h-105 w-105 rounded-full bg-accent-50 blur-3xl"
       />
-      <DnaMotif
-        segments={7}
-        className="pointer-events-none absolute top-0 -right-6 h-full w-32 text-secondary-800 opacity-[0.05] sm:w-40"
-      />
-
-      <div className="container-app relative grid grid-cols-1 items-center gap-12 py-14 sm:py-16 lg:grid-cols-12 lg:py-20">
+      <div className="container-app relative grid grid-cols-1 items-center gap-10 py-10 sm:py-12 lg:grid-cols-12 lg:py-14">
         <Reveal className="lg:col-span-7">
           <span className="eyebrow rounded-full border border-primary-100 bg-primary-50 px-3.5 py-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-primary-600" />
@@ -85,7 +80,7 @@ export default function Hero() {
             </Link>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-8 border-t border-secondary-100 pt-6">
+          <div className="mt-8 flex flex-wrap items-center gap-8 border-t border-secondary-100 pt-6">
             <div className="flex items-center gap-3">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-br from-primary-500 to-primary-700 text-white shadow-md shadow-primary-600/20">
                 <Users className="h-5.5 w-5.5" />
@@ -114,7 +109,12 @@ export default function Hero() {
           />
           <InquiryForm />
 
-          <div className="absolute -bottom-6 -left-6 hidden items-center gap-2.5 rounded-2xl border border-secondary-100 bg-white px-4 py-3 shadow-soft sm:flex">
+          <HeroBackdrop
+            opacity={0.65}
+            className="pointer-events-none absolute top-1/2 left-full ml-4 hidden h-56 w-40 -translate-y-1/2 -rotate-6 lg:block lg:h-[80vh] lg:w-96 xl:w-104"
+          />
+
+          {/* <div className="absolute -bottom-6 -left-6 hidden items-center gap-2.5 rounded-2xl border border-secondary-100 bg-white px-4 py-3 shadow-soft sm:flex">
             <div className="flex -space-x-2">
               {["RS", "AP", "ND"].map((initials) => (
                 <span
@@ -133,7 +133,7 @@ export default function Hero() {
               </div>
               <p className="text-[11px] font-semibold text-secondary-600">2500+ learners trained</p>
             </div>
-          </div>
+          </div> */}
         </Reveal>
       </div>
     </section>
