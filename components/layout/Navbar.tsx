@@ -22,7 +22,7 @@ export default function Navbar() {
         className="relative border-b border-secondary-100"
         onMouseLeave={() => setOpenMenu(null)}
       >
-        <div className="container-app flex h-20 items-center justify-between gap-4">
+        <div className="container-app flex h-20 items-center justify-between gap-4 xl:justify-center xl:gap-12">
           <Logo />
 
           <nav className="hidden xl:block">
@@ -53,6 +53,24 @@ export default function Navbar() {
                       />
                     )}
                   </Link>
+
+                  {item.compact && item.columns && openMenu === item.label && (
+                    <div className="absolute top-full left-0 z-40 w-56 rounded-lg border border-secondary-100 bg-white p-2 shadow-soft">
+                      <ul className="space-y-1">
+                        {item.columns[0].links.map((link) => (
+                          <li key={link.href}>
+                            <Link
+                              href={link.href}
+                              onClick={() => setOpenMenu(null)}
+                              className="block rounded-md px-3 py-2 text-sm text-secondary-600 transition-colors hover:bg-secondary-50 hover:text-primary-700"
+                            >
+                              {link.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -78,6 +96,7 @@ export default function Navbar() {
         {NAV_ITEMS.map(
           (item) =>
             item.columns &&
+            !item.compact &&
             openMenu === item.label && (
               <MegaMenuPanel key={item.label} item={item} onNavigate={() => setOpenMenu(null)} />
             ),

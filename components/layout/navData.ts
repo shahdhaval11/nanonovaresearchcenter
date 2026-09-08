@@ -15,6 +15,8 @@ export type NavItem = {
   href: string;
   columns?: NavColumn[];
   cta?: NavLink;
+  /** Render the dropdown as a compact, content-sized menu under the nav item instead of a full-width mega panel. */
+  compact?: boolean;
 };
 
 export const NAV_ITEMS: NavItem[] = [
@@ -80,6 +82,19 @@ export const NAV_ITEMS: NavItem[] = [
       },
     ],
     cta: { label: "View All Programs", href: "/programs" },
+  },
+  {
+    label: "Internship",
+    href: "/internship",
+    compact: true,
+    columns: [
+      {
+        links: [
+          { label: "Online Internship", href: "/internship/online" },
+          { label: "Offline Internship", href: "/internship/offline" },
+        ],
+      },
+    ],
   },
   {
     label: "Research & Dissertation",
