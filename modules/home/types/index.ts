@@ -21,6 +21,7 @@ export type WhyPoint = {
 
 export type CoreService = {
   icon: LucideIcon;
+  image: string;
   title: string;
   description: string;
   href: string;

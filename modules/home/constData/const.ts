@@ -112,36 +112,42 @@ export const WHY_NANONOVA: WhyPoint[] = [
 export const CORE_SERVICES: CoreService[] = [
   {
     icon: TestTube,
+    image: "/core-services/research-dissertation.jpg",
     title: "Research & Dissertation Support",
     description: "From topic selection to publication, we guide you at every step.",
     href: "/research-dissertation",
   },
   {
     icon: Microscope,
+    image: "/core-services/laboratory-training.jpg",
     title: "Laboratory Training",
     description: "Hands-on training in advanced labs with expert guidance.",
     href: "/laboratory-services",
   },
   {
     icon: Award,
+    image: "/core-services/short-term-courses.jpg",
     title: "Short-Term Courses",
     description: "Certification courses designed for skill enhancement.",
     href: "/programs/short-term-courses",
   },
   {
     icon: Monitor,
+    image: "/core-services/bioinformatics.jpg",
     title: "Bioinformatics Services",
     description: "Computational analysis, NGS, docking, data analysis & more.",
     href: "/laboratory-services",
   },
   {
     icon: Presentation,
+    image: "/core-services/workshops-webinars.jpg",
     title: "Workshops & Webinars",
     description: "Interactive workshops by experts on trending topics.",
     href: "/workshops-events",
   },
   {
     icon: ClipboardList,
+    image: "/core-services/project-consultancy.jpg",
     title: "Project & Research Consultancy",
     description: "Custom solutions for academic & industry research needs.",
     href: "/for-industry",

@@ -1,14 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BookOpen,
-  FlaskConical,
-  GraduationCap,
-  Dna,
-  Users,
-  Target,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CORE_SERVICES } from "../constData/const";
 import Reveal from "@/components/ui/Reveal";
 import DnaMotif from "@/components/ui/DnaMotif";
@@ -21,8 +13,6 @@ const CARD_GRADIENTS = [
   "from-rose-500 to-pink-600",
   "from-teal-500 to-emerald-600",
 ];
-
-const ACCENT_ICONS: LucideIcon[] = [BookOpen, FlaskConical, GraduationCap, Dna, Users, Target];
 
 export default function CoreServicesSection() {
   return (
@@ -53,31 +43,29 @@ export default function CoreServicesSection() {
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {CORE_SERVICES.map((service, index) => {
             const gradient = CARD_GRADIENTS[index % CARD_GRADIENTS.length];
-            const AccentIcon = ACCENT_ICONS[index % ACCENT_ICONS.length];
             return (
               <Reveal key={service.title} delay={(index % 3) * 100}>
                 <div className="group h-full overflow-hidden rounded-2xl border border-secondary-100 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-transparent hover:shadow-xl">
-                  <div
-                    className={`relative flex h-28 items-center justify-center overflow-hidden bg-linear-to-br ${gradient}`}
-                  >
+                  <div className="relative h-40 overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
                     <div
                       aria-hidden
-                      className="absolute inset-0 opacity-20"
-                      style={{
-                        backgroundImage:
-                          "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-                        backgroundSize: "16px 16px",
-                      }}
+                      className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent"
                     />
-                    <AccentIcon
-                      aria-hidden
-                      className="absolute -top-3 -right-3 h-16 w-16 text-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
-                      strokeWidth={1.5}
-                    />
-                    <service.icon
-                      className="relative h-11 w-11 text-white drop-shadow-sm transition-transform duration-300 group-hover:scale-110"
-                      strokeWidth={1.75}
-                    />
+                    <div
+                      className={`absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br ${gradient} shadow-md`}
+                    >
+                      <service.icon
+                        className="h-5 w-5 text-white"
+                        strokeWidth={1.75}
+                      />
+                    </div>
                   </div>
 
                   <div className="p-5">
