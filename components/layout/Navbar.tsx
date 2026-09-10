@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, Lock } from "lucide-react";
 import clsx from "clsx";
 import Logo from "./Logo";
 import TopBar from "./TopBar";
@@ -77,6 +77,13 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <Link
+              href="/admin/login"
+              className="hidden items-center gap-1.5 rounded-md border border-secondary-200 px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-secondary-700 transition-colors hover:border-secondary-800 hover:text-secondary-800 xl:inline-flex"
+            >
+              <Lock className="h-3.5 w-3.5" />
+              Admin
+            </Link>
             <Link
               href="/contactus"
               className="hidden items-center gap-1.5 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-700 xl:inline-flex"
