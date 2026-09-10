@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, LogOut } from "lucide-react";
+import { LayoutDashboard, Inbox, LogOut } from "lucide-react";
 import clsx from "clsx";
 import Logo from "@/components/layout/Logo";
 
-const NAV_ITEMS = [{ href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard }];
+const NAV_ITEMS = [
+  { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/enquiries", label: "Enquiries", icon: Inbox },
+];
 
 export default function AdminSidebar() {
   const pathname = usePathname();
@@ -22,12 +25,12 @@ export default function AdminSidebar() {
   }
 
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col bg-secondary-800 text-white">
+    <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col bg-secondary-800 text-white">
       <div className="p-6">
         <Logo variant="dark" />
       </div>
 
-      <nav className="flex-1 space-y-1 px-4">
+      <nav className="flex-1 space-y-1 overflow-y-auto px-4">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const active = pathname === href;
           return (
@@ -48,7 +51,7 @@ export default function AdminSidebar() {
         })}
       </nav>
 
-      <div className="p-4">
+      <div className="border-t border-white/10 p-4">
         <button
           type="button"
           onClick={handleLogout}

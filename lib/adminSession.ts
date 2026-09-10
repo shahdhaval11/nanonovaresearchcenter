@@ -1,7 +1,8 @@
 import { createHmac, timingSafeEqual } from "crypto";
+import { cookies } from "next/headers";
 
 export const ADMIN_SESSION_COOKIE = "admin_session";
-const SESSION_MAX_AGE_SECONDS = 60 * 60 * 8; // 8 hours
+const SESSION_MAX_AGE_SECONDS = 60 * 60; // 1 hour
 
 export type AdminSessionPayload = {
   userId: number;
@@ -46,6 +47,11 @@ export function verifyAdminSessionToken(token: string | undefined | null): Admin
   } catch {
     return null;
   }
+}
+
+export async function getAdminSession(): Promise<AdminSessionPayload | null> {
+  const cookieStore = await cookies();
+  return verifyAdminSessionToken(cookieStore.get(ADMIN_SESSION_COOKIE)?.value);
 }
 
 export const adminSessionCookieOptions = {

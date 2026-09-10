@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ReduxProvider from "@/lib/redux/provider";
 
 export const metadata: Metadata = {
   title: {
@@ -12,5 +13,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {
-  return children;
+  return <ReduxProvider>{children}</ReduxProvider>;
 }
