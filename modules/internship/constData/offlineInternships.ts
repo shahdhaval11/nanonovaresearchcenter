@@ -35,7 +35,7 @@ export const OFFLINE_INTERNSHIPS: Internship[] = [
     description:
       "Combine computational bioinformatics analysis with correlating wet-lab techniques to understand how sequence data connects to real laboratory outcomes.",
     image: "/internship/bioinformatics.svg",
-    fee: "free",
+    fee: "paid",
   },
   {
     slug: "clinical-microbiology",
@@ -71,7 +71,7 @@ export const OFFLINE_INTERNSHIPS: Internship[] = [
     description:
       "Design and execute a guided lab-based research project, applying experimental design principles from hypothesis to data collection.",
     image: "/internship/research-methodology.svg",
-    fee: "free",
+    fee: "paid",
   },
   {
     slug: "drug-discovery",

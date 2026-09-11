@@ -8,7 +8,7 @@ export const ONLINE_INTERNSHIPS: Internship[] = [
     description:
       "Learn core microbiology concepts through live online sessions, virtual lab simulations and case-based assignments covering microbial identification and culturing principles.",
     image: "/internship/microbiology.svg",
-    fee: "free",
+    fee: "paid",
   },
   {
     slug: "biotechnology",
@@ -26,7 +26,7 @@ export const ONLINE_INTERNSHIPS: Internship[] = [
     description:
       "Understand DNA/RNA analysis, PCR principles and sequence data interpretation with guided online modules blending molecular biology with computational tools.",
     image: "/internship/molecular-biology.svg",
-    fee: "free",
+    fee: "paid",
   },
   {
     slug: "bioinformatics",
@@ -35,7 +35,7 @@ export const ONLINE_INTERNSHIPS: Internship[] = [
     description:
       "Work with real biological datasets to learn sequence alignment, molecular docking and phylogenetic analysis using industry-standard bioinformatics software.",
     image: "/internship/bioinformatics.svg",
-    fee: "free",
+    fee: "paid",
   },
   {
     slug: "clinical-microbiology",
@@ -53,7 +53,7 @@ export const ONLINE_INTERNSHIPS: Internship[] = [
     description:
       "Study food spoilage, contamination sources and quality control standards through virtual case studies aligned with food safety regulations.",
     image: "/internship/food-microbiology.svg",
-    fee: "free",
+    fee: "paid",
   },
   {
     slug: "pharmaceutical-microbiology",
@@ -71,7 +71,7 @@ export const ONLINE_INTERNSHIPS: Internship[] = [
     description:
       "Build strong fundamentals in research design, literature review and scientific writing to prepare well-structured academic papers and reports.",
     image: "/internship/research-methodology.svg",
-    fee: "free",
+    fee: "paid",
   },
   {
     slug: "drug-discovery",
@@ -89,6 +89,6 @@ export const ONLINE_INTERNSHIPS: Internship[] = [
     description:
       "Understand how microorganisms are applied for pollution control and waste treatment through virtual case studies on bioremediation techniques.",
     image: "/internship/environmental-science.svg",
-    fee: "free",
+    fee: "paid",
   },
 ];

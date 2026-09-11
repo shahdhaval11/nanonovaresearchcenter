@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
+import ApplyNowModal from "@/components/common/ApplyNowModal";
 import { INTERNSHIP_MODE_LABEL } from "../constData";
 import type { Internship, InternshipFee, InternshipMode } from "../types";
 
@@ -24,6 +25,7 @@ export default function InternshipListPage({
   internships: Internship[];
 }) {
   const [feeFilter, setFeeFilter] = useState<InternshipFee | "all">("all");
+  const [selectedInternship, setSelectedInternship] = useState<Internship | null>(null);
 
   const filtered = useMemo(
     () =>
@@ -127,12 +129,13 @@ export default function InternshipListPage({
                         <p className="mt-2 flex-1 text-sm leading-relaxed text-secondary-500">
                           {item.description}
                         </p>
-                        <Link
-                          href="/contactus"
+                        <button
+                          type="button"
+                          onClick={() => setSelectedInternship(item)}
                           className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-md border border-secondary-800 py-2.5 text-xs font-semibold text-secondary-800 transition-colors hover:bg-secondary-800 hover:text-white"
                         >
                           Apply Now
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </Reveal>
@@ -142,6 +145,15 @@ export default function InternshipListPage({
           </div>
         </div>
       </div>
+
+      {selectedInternship && (
+        <ApplyNowModal
+          open
+          onClose={() => setSelectedInternship(null)}
+          programName={selectedInternship.track}
+          programMode={INTERNSHIP_MODE_LABEL[mode]}
+        />
+      )}
     </section>
   );
 }
