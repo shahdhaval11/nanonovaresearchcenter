@@ -1,8 +1,12 @@
 "use client";
 
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { toast } from "react-toastify";
-import { X } from "lucide-react";
+import Image from "next/image";
+import { X, UploadCloud, CheckCircle2 } from "lucide-react";
+
+const PAYMENT_QR_CODE_SRC = "/media/payment-qr-code.svg";
+const MAX_SCREENSHOT_SIZE_MB = 5;
 
 const GENDER_OPTIONS = ["Male", "Female", "Other"] as const;
 
@@ -166,6 +170,8 @@ const errorInputClass = "border-red-400 focus:border-red-400 focus:ring-red-400"
 const labelClass = "mb-1.5 block text-xs font-semibold text-secondary-600";
 const errorTextClass = "mt-1 text-xs text-red-500";
 
+type Step = "details" | "payment";
+
 export default function ApplyNowModal({
   open,
   onClose,
@@ -177,9 +183,14 @@ export default function ApplyNowModal({
   programName: string;
   programMode?: string;
 }) {
+  const [step, setStep] = useState<Step>("details");
   const [values, setValues] = useState<ApplyFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [screenshot, setScreenshot] = useState<File | null>(null);
+  const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
+  const [screenshotError, setScreenshotError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -188,7 +199,7 @@ export default function ApplyNowModal({
     document.body.style.overflow = "hidden";
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     }
     window.addEventListener("keydown", handleKeyDown);
 
@@ -196,9 +207,30 @@ export default function ApplyNowModal({
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [open, onClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  useEffect(() => {
+    return () => {
+      if (screenshotPreview) URL.revokeObjectURL(screenshotPreview);
+    };
+  }, [screenshotPreview]);
 
   if (!open) return null;
+
+  function handleClose() {
+    // Start a clean application the next time the modal is opened.
+    setStep("details");
+    setValues(INITIAL_VALUES);
+    setErrors({});
+    setScreenshot(null);
+    setScreenshotPreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
+    setScreenshotError("");
+    onClose();
+  }
 
   function setField<K extends keyof ApplyFormValues>(field: K, value: ApplyFormValues[K]) {
     setValues((prev) => ({ ...prev, [field]: value }));
@@ -210,12 +242,62 @@ export default function ApplyNowModal({
       setField(field, e.target.value as never);
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleDetailsSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const validationErrors = validate(values);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
+
+    setStep("payment");
+  }
+
+  function handleScreenshotChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    setScreenshotError("");
+
+    if (!file) {
+      setScreenshot(null);
+      setScreenshotPreview((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return null;
+      });
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setScreenshotError("Please upload an image file (JPG, PNG or WEBP).");
+      e.target.value = "";
+      return;
+    }
+
+    if (file.size > MAX_SCREENSHOT_SIZE_MB * 1024 * 1024) {
+      setScreenshotError(`Screenshot must be smaller than ${MAX_SCREENSHOT_SIZE_MB}MB.`);
+      e.target.value = "";
+      return;
+    }
+
+    setScreenshot(file);
+    setScreenshotPreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return URL.createObjectURL(file);
+    });
+  }
+
+  function removeScreenshot() {
+    setScreenshot(null);
+    setScreenshotPreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  async function handleFinalSubmit() {
+    if (!screenshot) {
+      setScreenshotError("Please upload your payment screenshot to confirm your application.");
+      return;
+    }
 
     setSubmitting(true);
 
@@ -223,14 +305,14 @@ export default function ApplyNowModal({
     window.setTimeout(() => {
       setSubmitting(false);
       toast.success("Application submitted! Our team will get in touch with you shortly.");
-      onClose();
+      handleClose();
     }, 800);
   }
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-secondary-900/50 p-4"
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
         className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-lg bg-white shadow-xl"
@@ -246,7 +328,7 @@ export default function ApplyNowModal({
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="Close"
             className="text-secondary-400 hover:text-secondary-700"
           >
@@ -254,7 +336,42 @@ export default function ApplyNowModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="overflow-y-auto px-6 py-5">
+        <div className="flex items-center gap-2 border-b border-secondary-100 px-6 py-3">
+          <div
+            className={`flex items-center gap-2 text-xs font-semibold ${
+              step === "details" ? "text-primary-600" : "text-secondary-400"
+            }`}
+          >
+            <span
+              className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] ${
+                step === "payment"
+                  ? "bg-primary-100 text-primary-600"
+                  : "bg-primary-600 text-white"
+              }`}
+            >
+              {step === "payment" ? <CheckCircle2 className="h-4 w-4" /> : "1"}
+            </span>
+            Application Details
+          </div>
+          <span className="h-px flex-1 bg-secondary-100" />
+          <div
+            className={`flex items-center gap-2 text-xs font-semibold ${
+              step === "payment" ? "text-primary-600" : "text-secondary-400"
+            }`}
+          >
+            <span
+              className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] ${
+                step === "payment" ? "bg-primary-600 text-white" : "bg-secondary-100"
+              }`}
+            >
+              2
+            </span>
+            Payment
+          </div>
+        </div>
+
+        {step === "details" && (
+        <form onSubmit={handleDetailsSubmit} className="overflow-y-auto px-6 py-5">
           <span className="eyebrow">Section 1</span>
           <h3 className="mt-1 mb-4 font-heading text-sm font-bold text-secondary-800">
             Personal Details
@@ -393,25 +510,24 @@ export default function ApplyNowModal({
 
           <div className="space-y-4">
             <div>
-              <span className={labelClass}>Current Status*</span>
-              <div className="grid grid-cols-1 gap-2 pt-1 sm:grid-cols-2">
+              <label className={labelClass} htmlFor="currentStatus">
+                Current Status*
+              </label>
+              <select
+                id="currentStatus"
+                value={values.currentStatus}
+                onChange={handleTextChange("currentStatus")}
+                className={`${inputClass} ${errors.currentStatus ? errorInputClass : ""}`}
+              >
+                <option value="" disabled>
+                  Select your current status
+                </option>
                 {CURRENT_STATUS_OPTIONS.map((option) => (
-                  <label
-                    key={option}
-                    className="flex items-center gap-2 text-sm text-secondary-700"
-                  >
-                    <input
-                      type="radio"
-                      name="currentStatus"
-                      value={option}
-                      checked={values.currentStatus === option}
-                      onChange={() => setField("currentStatus", option)}
-                      className="h-4 w-4 border-secondary-300 text-primary-600 focus:ring-primary-500"
-                    />
+                  <option key={option} value={option}>
                     {option}
-                  </label>
+                  </option>
                 ))}
-              </div>
+              </select>
               {errors.currentStatus && <p className={errorTextClass}>{errors.currentStatus}</p>}
               {values.currentStatus === "Other" && (
                 <div className="mt-2">
@@ -430,25 +546,24 @@ export default function ApplyNowModal({
             </div>
 
             <div>
-              <span className={labelClass}>Highest Qualification*</span>
-              <div className="grid grid-cols-1 gap-2 pt-1 sm:grid-cols-2">
+              <label className={labelClass} htmlFor="highestQualification">
+                Highest Qualification*
+              </label>
+              <select
+                id="highestQualification"
+                value={values.highestQualification}
+                onChange={handleTextChange("highestQualification")}
+                className={`${inputClass} ${errors.highestQualification ? errorInputClass : ""}`}
+              >
+                <option value="" disabled>
+                  Select your highest qualification
+                </option>
                 {QUALIFICATION_OPTIONS.map((option) => (
-                  <label
-                    key={option}
-                    className="flex items-center gap-2 text-sm text-secondary-700"
-                  >
-                    <input
-                      type="radio"
-                      name="highestQualification"
-                      value={option}
-                      checked={values.highestQualification === option}
-                      onChange={() => setField("highestQualification", option)}
-                      className="h-4 w-4 border-secondary-300 text-primary-600 focus:ring-primary-500"
-                    />
+                  <option key={option} value={option}>
                     {option}
-                  </label>
+                  </option>
                 ))}
-              </div>
+              </select>
               {errors.highestQualification && (
                 <p className={errorTextClass}>{errors.highestQualification}</p>
               )}
@@ -545,14 +660,113 @@ export default function ApplyNowModal({
             {errors.consent && <p className={errorTextClass}>{errors.consent}</p>}
           </div>
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="btn-primary mt-5 w-full disabled:opacity-70"
-          >
-            {submitting ? "Submitting..." : "Submit Application"}
+          <button type="submit" className="btn-primary mt-5 w-full">
+            Continue to Payment
           </button>
         </form>
+        )}
+
+        {step === "payment" && (
+          <div className="overflow-y-auto px-6 py-5">
+            <span className="eyebrow">Section 3</span>
+            <h3 className="mt-1 mb-1 font-heading text-sm font-bold text-secondary-800">
+              Complete Your Payment
+            </h3>
+            <p className="mb-5 text-sm text-secondary-500">
+              Scan the QR code below using any UPI app to pay the application fee for{" "}
+              <span className="font-semibold text-secondary-700">{programName}</span>, then upload
+              a screenshot of the successful payment to confirm your application.
+            </p>
+
+            <div className="flex flex-col items-center gap-3 rounded-lg border border-secondary-100 bg-secondary-50 px-4 py-6">
+              <div className="rounded-md border border-secondary-200 bg-white p-2">
+                <Image
+                  src={PAYMENT_QR_CODE_SRC}
+                  alt="Scan this QR code to pay the application fee"
+                  width={220}
+                  height={220}
+                  className="h-55 w-55"
+                />
+              </div>
+              <p className="text-xs text-secondary-500">Scan &amp; Pay via any UPI app</p>
+            </div>
+
+            <div className="mt-6">
+              <span className={labelClass}>Upload Payment Screenshot*</span>
+
+              {!screenshotPreview ? (
+                <label
+                  htmlFor="paymentScreenshot"
+                  className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed px-4 py-8 text-center transition-colors hover:border-primary-400 hover:bg-primary-50/50 ${
+                    screenshotError ? "border-red-400" : "border-secondary-200"
+                  }`}
+                >
+                  <UploadCloud className="h-6 w-6 text-secondary-400" />
+                  <span className="text-sm font-medium text-secondary-600">
+                    Click to upload payment screenshot
+                  </span>
+                  <span className="text-xs text-secondary-400">
+                    JPG, PNG or WEBP · up to {MAX_SCREENSHOT_SIZE_MB}MB
+                  </span>
+                </label>
+              ) : (
+                <div className="flex items-center gap-3 rounded-md border border-secondary-200 p-3">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md border border-secondary-100">
+                    <Image
+                      src={screenshotPreview}
+                      alt="Payment screenshot preview"
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="flex items-center gap-1.5 text-sm font-medium text-secondary-700">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-green-600" />
+                      <span className="truncate">{screenshot?.name}</span>
+                    </p>
+                    <p className="text-xs text-secondary-400">Screenshot uploaded</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={removeScreenshot}
+                    className="shrink-0 text-xs font-semibold text-secondary-500 hover:text-red-500"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+
+              <input
+                ref={fileInputRef}
+                id="paymentScreenshot"
+                type="file"
+                accept="image/*"
+                onChange={handleScreenshotChange}
+                className="hidden"
+              />
+              {screenshotError && <p className={errorTextClass}>{screenshotError}</p>}
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setStep("details")}
+                className="flex-1 rounded-md border border-secondary-200 py-2.5 text-sm font-semibold text-secondary-600 hover:bg-secondary-50"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={handleFinalSubmit}
+                disabled={!screenshot || submitting}
+                className="btn-primary flex-2 disabled:opacity-50"
+              >
+                {submitting ? "Submitting..." : "Submit Application"}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
